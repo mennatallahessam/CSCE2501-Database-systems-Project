@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERD — Resale Real Estate Database</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a5f, #2d6a9f);
+            color: white;
+        }
+        .header h1 { font-size: 20px; font-weight: 700; }
+        .header p { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+
+        .canvas {
+            position: relative;
+            width: 1300px;
+            height: 1100px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        svg.connections {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .entity {
+            position: absolute;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            z-index: 2;
+            min-width: 170px;
+            border: 2px solid transparent;
+        }
+
+        .entity-header {
+            padding: 7px 12px;
+            font-weight: 700;
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .entity-body {
+            background: white;
+            padding: 5px 0;
+            font-size: 11px;
+        }
+
+        .attr {
+            padding: 2.5px 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #333;
+        }
+
+        .attr .tag {
+            font-size: 8px;
+            font-weight: 700;
+            padding: 1px 4px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .pk { text-decoration: underline; font-weight: 600; }
+        .fk { font-style: italic; color: #7c3aed; }
+        .tag-pk { background: #dbeafe; color: #1e40af; }
+        .tag-fk { background: #ede9fe; color: #6d28d9; }
+
+        .color-blue .entity-header { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+        .color-blue { border-color: #93bbfd; }
+        .color-green .entity-header { background: linear-gradient(135deg, #059669, #10b981); }
+        .color-green { border-color: #86efac; }
+        .color-purple .entity-header { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
+        .color-purple { border-color: #c4b5fd; }
+        .color-orange .entity-header { background: linear-gradient(135deg, #d97706, #f59e0b); }
+        .color-orange { border-color: #fcd34d; }
+        .color-teal .entity-header { background: linear-gradient(135deg, #0d9488, #14b8a6); }
+        .color-teal { border-color: #5eead4; }
+        .color-rose .entity-header { background: linear-gradient(135deg, #e11d48, #f43f5e); }
+        .color-rose { border-color: #fda4af; }
+        .color-slate .entity-header { background: linear-gradient(135deg, #475569, #64748b); }
+        .color-slate { border-color: #94a3b8; }
+
+        .legend {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 10px;
+            z-index: 5;
+        }
+        .legend h4 { font-size: 11px; margin-bottom: 6px; color: #334155; }
+        .legend-item { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
+        .legend-swatch { width: 24px; height: 3px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Entity-Relationship Diagram (ERD)</h1>
+    <p>ResaleRealEstateDB — CSCE 2501 Milestone I</p>
+</div>
+
+<div class="canvas" id="canvas">
+    <svg class="connections" id="svg"></svg>
+
+    <!-- ============ ROW 1: Independent entities ============ -->
+
+    <!-- DEVELOPER  (top-left) -->
+    <div class="entity color-green" id="e-developer" style="left: 30px; top: 30px;">
+        <div class="entity-header">DEVELOPER</div>
+        <div class="entity-body">
+            <div class="attr pk"><span class="tag tag-pk">PK</span> developer_id</div>
+            <div class="attr">developer_name</div>
+            <div class="attr">corporate_details</div>
+            <div class="attr">total_projects</div>
+            <div class="attr">total_properties_listed</div>
+        </div>
+    </div>
+
+    <!-- LOCATION  (top-center) -->
+    <div class="entity color-blue" id="e-location" style="left: 520px; top: 30px;">
+        <div class="entity-header">LOCATION</div>
+        <div class="entity-body">
+            <div class="attr pk"><span class="tag tag-pk">PK</span> location_id</div>
+            <div class="attr">city</div>
+            <div class="attr">district</div>
+            <div class="attr">area_name</div>
+            <div class="attr">compound_name</div>
+        </div>
+    </div>
+
+    <!-- USER  (top-right) -->
+    <div class="entity color-purple" id="e-user" style="left: 1050px; top: 30px;">
+        <div class="entity-header">USER</div>
+        <div class="entity-body">
+            <div class="attr pk"><span class="tag tag-pk">PK</span> user_id</div>
+            <div class="attr">username</div>
+            <div class="attr">email</div>
+            <div class="attr">password_hash</div>
+            <div class="attr">gender</div>
+            <div class="attr">age</div>
+            <div class="attr">birthdate</div>
+        </div>
+    </div>
+
+    <!-- AMENITY  (far left, middle) -->
+    <div class="entity color-orange" id="e-amenity" style="left: 30px; top: 770px;">
+        <div class="entity-header">AMENITY</div>
+        <div class="entity-body">
+            <div class="attr pk"><span class="tag tag-pk">PK</span> amenity_id</div>
+            <div class="attr">amenity_name</div>
+        </div>
+    </div>
+
+    <!-- ============ ROW 2: Dependent entities ============ -->
+
+    <!-- DEVELOPMENT  (center-left) -->
+    <div class="entity color-teal" id="e-development" style="left: 260px; top: 280px;">
+        <div class="entity-header">DEVELOPMENT</div>
+        <div class="entity-body">
+            <div class="attr pk"><span class="tag tag-pk">PK</span> development_id</div>
+            <div class="attr">project_name</div>
+            <div class="attr">description</div>
+            <div class="attr fk"><span class="tag tag-fk">FK</span> developer_id</div>
+            <div class="attr fk"><span class="tag tag-fk">FK</span> location_id</div>
+        </div>
+    </div>
+
+    <!-- USER_FOCUS_AREA  (center-right) -->
+    <div class="entity color-purple" id="e-user-focus" style="left: 830px; top: 190px;">
+        <div class="entity-header">USER_FOCUS_AREA</div>
+        <div class="entity-body">
+            <div class="attr pk fk"><span class="tag tag-pk">PK</span><span class="tag tag-fk">FK</span> user_id</div>
+            <div class="attr pk fk"><span class="tag tag-pk">PK</span><span class="tag tag-fk">FK</span> location_id</div>
+        </div>
+    </div>
+
+    <!-- REVIEW  (right) -->
+    <div class="entity color-slate" id="e-review" style="left: 830px; top: 370px;">
+        <div class="entity-header">REVIEW</div>
+        <div class="entity-body">
+            <div class="attr pk"><span class="tag tag-pk">PK</span> review_id</div>
+            <div class="attr fk"><span class="tag tag-fk">FK</span> user_id</div>
+            <div class="attr fk"><span class="tag tag-fk">FK</span> development_id</div>
+            <div class="attr">rating (1–10)</div>
+            <div class="attr">review_comment</div>
+            <div class="attr">review_date</div>
+        </div>
+    </div>
+
+    <!-- ============ ROW 3: Property & junctions ============ -->
+
+    <!-- PROPERTY  (center) -->
+    <div class="entity color-rose" id="e-property" style="left: 400px; top: 550px;">
+        <div class="entity-header">PROPERTY</div>
+        <div class="entity-body">
+            <div class="attr pk"><span class="tag tag-pk">PK</span> property_id</div>
+            <div class="attr">title</div>
+            <div class="attr">description</div>
+            <div class="attr">source_url</div>
+            <div class="attr">total_area_sqm</div>
+            <div class="attr">num_bedrooms</div>
+            <div class="attr">num_bathrooms</div>
+            <div class="attr">property_type</div>
+            <div class="attr">asking_price</div>
+            <div class="attr">price_per_sqm</div>
+            <div class="attr">payment_method</div>
+            <div class="attr">down_payment</div>
+            <div class="attr">contract_year</div>
+            <div class="attr">discount_over_market</div>
+            <div class="attr">gain_over_market</div>
+            <div class="attr fk"><span class="tag tag-fk">FK</span> development_id</div>
+            <div class="attr fk"><span class="tag tag-fk">FK</span> location_id</div>
+        </div>
+    </div>
+
+    <!-- PROPERTY_AMENITY  (bottom-left) -->
+    <div class="entity color-orange" id="e-property-amenity" style="left: 60px; top: 610px;">
+        <div class="entity-header">PROPERTY_AMENITY</div>
+        <div class="entity-body">
+            <div class="attr pk fk"><span class="tag tag-pk">PK</span><span class="tag tag-fk">FK</span> property_id</div>
+            <div class="attr pk fk"><span class="tag tag-pk">PK</span><span class="tag tag-fk">FK</span> amenity_id</div>
+        </div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+        <h4>Legend</h4>
+        <div class="legend-item"><span class="tag tag-pk" style="font-size:9px">PK</span> Primary Key</div>
+        <div class="legend-item"><span class="tag tag-fk" style="font-size:9px">FK</span> Foreign Key</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#3b82f6"></div> 1 : N Relationship</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#f59e0b; background:repeating-linear-gradient(90deg,#8b5cf6 0,#8b5cf6 4px,transparent 4px,transparent 7px)"></div> M : N (Junction Table)</div>
+    </div>
+</div>
+
+<script>
+const svg = document.getElementById('svg');
+const canvas = document.getElementById('canvas');
+
+function box(id) {
+    const el = document.getElementById(id);
+    const r = el.getBoundingClientRect();
+    const c = canvas.getBoundingClientRect();
+    return {
+        l: r.left - c.left,
+        t: r.top - c.top,
+        r: r.right - c.left,
+        b: r.bottom - c.top,
+        cx: (r.left + r.right) / 2 - c.left,
+        cy: (r.top + r.bottom) / 2 - c.top,
+        w: r.width,
+        h: r.height
+    };
+}
+
+function pt(b, side, offset) {
+    offset = offset || 0;
+    switch(side) {
+        case 'top':    return { x: b.cx + offset, y: b.t };
+        case 'bottom': return { x: b.cx + offset, y: b.b };
+        case 'left':   return { x: b.l, y: b.cy + offset };
+        case 'right':  return { x: b.r, y: b.cy + offset };
+    }
+}
+
+function svgEl(tag, attrs) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [k,v] of Object.entries(attrs)) el.setAttribute(k, v);
+    svg.appendChild(el);
+    return el;
+}
+
+function drawLine(p1, p2, color, dashed, waypoints) {
+    let d = `M ${p1.x} ${p1.y}`;
+    if (waypoints) {
+        for (const wp of waypoints) d += ` L ${wp.x} ${wp.y}`;
+    }
+    d += ` L ${p2.x} ${p2.y}`;
+    svgEl('path', {
+        d: d,
+        stroke: color,
+        'stroke-width': '2',
+        fill: 'none',
+        'stroke-dasharray': dashed ? '6,4' : 'none'
+    });
+}
+
+function drawCard(x, y, label, color) {
+    // cardinality label
+    svgEl('rect', {
+        x: x - 10, y: y - 8,
+        width: 20, height: 16,
+        rx: 3, fill: 'white',
+        stroke: '#cbd5e1', 'stroke-width': '1'
+    });
+    svgEl('text', {
+        x: x, y: y + 4,
+        'text-anchor': 'middle',
+        'font-size': '11',
+        'font-weight': '700',
+        'font-family': 'Inter, sans-serif',
+        fill: color || '#1e40af'
+    }).textContent = label;
+}
+
+function drawRel(id1, side1, id2, side2, card1, card2, color, dashed, off1, off2, waypoints) {
+    const b1 = box(id1), b2 = box(id2);
+    const p1 = pt(b1, side1, off1);
+    const p2 = pt(b2, side2, off2);
+
+    drawLine(p1, p2, color, dashed, waypoints);
+
+    // Cardinality labels
+    const dx = (waypoints && waypoints.length > 0) ? waypoints[0].x - p1.x : p2.x - p1.x;
+    const dy = (waypoints && waypoints.length > 0) ? waypoints[0].y - p1.y : p2.y - p1.y;
+    const len1 = Math.sqrt(dx*dx + dy*dy) || 1;
+
+    const lastWp = (waypoints && waypoints.length > 0) ? waypoints[waypoints.length - 1] : p1;
+    const dx2 = p2.x - lastWp.x;
+    const dy2 = p2.y - lastWp.y;
+    const len2 = Math.sqrt(dx2*dx2 + dy2*dy2) || 1;
+
+    // Near start
+    const nx1 = -dy/len1, ny1 = dx/len1;
+    drawCard(p1.x + dx/len1*22 + nx1*14, p1.y + dy/len1*22 + ny1*14, card1, color);
+
+    // Near end
+    const nx2 = -dy2/len2, ny2 = dx2/len2;
+    drawCard(p2.x - dx2/len2*22 + nx2*14, p2.y - dy2/len2*22 + ny2*14, card2, color);
+}
+
+// ============ Draw relationships ============
+
+// Developer (1) --> Development (N)
+drawRel('e-developer', 'bottom', 'e-development', 'top', '1', 'N', '#059669', false, 0, -20);
+
+// Location (1) --> Development (N)
+drawRel('e-location', 'bottom', 'e-development', 'top', '1', 'N', '#2563eb', false, -20, 20);
+
+// Development (1) --> Property (N)
+drawRel('e-development', 'bottom', 'e-property', 'top', '1', 'N', '#0d9488', false, 0, -30);
+
+// Location (1) --> Property (N)  — route through a waypoint to avoid overlapping
+const locBox = box('e-location');
+const propBox = box('e-property');
+drawRel('e-location', 'bottom', 'e-property', 'top', '1', 'N', '#2563eb', false, 20, 30,
+    [{x: locBox.cx + 20, y: 240}, {x: propBox.cx + 30 + (propBox.r - propBox.l)/2 + 30, y: 240}, {x: propBox.cx + 30 + (propBox.r - propBox.l)/2 + 30, y: 530}]
+);
+
+// Property (N) <-- M:N --> Amenity (N)  via Property_Amenity
+drawRel('e-property', 'left', 'e-property-amenity', 'right', 'N', '', '#e11d48', true, 0, 0);
+drawRel('e-amenity', 'top', 'e-property-amenity', 'bottom', 'N', '', '#d97706', true, 0, 0);
+
+// User (1) --> Review (N)
+drawRel('e-user', 'bottom', 'e-review', 'right', '1', 'N', '#7c3aed', false, 0, -20);
+
+// Development (1) --> Review (N)
+drawRel('e-development', 'right', 'e-review', 'left', '1', 'N', '#475569', false, 0, 10);
+
+// User (M) <--> Location (N) via User_Focus_Area
+drawRel('e-user', 'left', 'e-user-focus', 'right', 'N', '', '#7c3aed', true, -30, 0);
+drawRel('e-location', 'right', 'e-user-focus', 'left', 'N', '', '#2563eb', true, -10, 0);
+
+</script>
+
+</body>
+</html>
