@@ -6,9 +6,7 @@
     <title>ERD — Resale Real Estate Database</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Inter', sans-serif;
             background: #f0f2f5;
@@ -16,7 +14,6 @@
             flex-direction: column;
             align-items: center;
         }
-
         .header {
             width: 100%;
             text-align: center;
@@ -24,13 +21,13 @@
             background: linear-gradient(135deg, #1e3a5f, #2d6a9f);
             color: white;
         }
-        .header h1 { font-size: 20px; font-weight: 700; }
-        .header p { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+        .header h1 { font-size: 22px; font-weight: 700; }
+        .header p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
 
         .canvas {
             position: relative;
-            width: 1300px;
-            height: 1100px;
+            width: 1600px;
+            height: 1250px;
             margin: 20px auto;
             background: white;
             border-radius: 12px;
@@ -47,45 +44,40 @@
 
         .entity {
             position: absolute;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            box-shadow: 0 3px 14px rgba(0,0,0,0.13);
             z-index: 2;
-            min-width: 170px;
+            min-width: 185px;
             border: 2px solid transparent;
         }
-
         .entity-header {
-            padding: 7px 12px;
+            padding: 9px 14px;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 13px;
             color: white;
             text-align: center;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
         }
-
         .entity-body {
             background: white;
-            padding: 5px 0;
-            font-size: 11px;
+            padding: 6px 0;
+            font-size: 11.5px;
         }
-
         .attr {
-            padding: 2.5px 12px;
+            padding: 3px 14px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             color: #333;
         }
-
         .attr .tag {
-            font-size: 8px;
+            font-size: 9px;
             font-weight: 700;
-            padding: 1px 4px;
+            padding: 1px 5px;
             border-radius: 3px;
             flex-shrink: 0;
         }
-
         .pk { text-decoration: underline; font-weight: 600; }
         .fk { font-style: italic; color: #7c3aed; }
         .tag-pk { background: #dbeafe; color: #1e40af; }
@@ -108,18 +100,18 @@
 
         .legend {
             position: absolute;
-            bottom: 14px;
-            right: 14px;
+            bottom: 16px;
+            right: 16px;
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 10px;
+            padding: 12px 16px;
+            font-size: 11px;
             z-index: 5;
         }
-        .legend h4 { font-size: 11px; margin-bottom: 6px; color: #334155; }
-        .legend-item { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
-        .legend-swatch { width: 24px; height: 3px; border-radius: 2px; }
+        .legend h4 { font-size: 12px; margin-bottom: 8px; color: #334155; }
+        .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; color: #475569; }
+        .legend-swatch { width: 30px; height: 3px; border-radius: 2px; }
     </style>
 </head>
 <body>
@@ -134,8 +126,8 @@
 
     <!-- ============ ROW 1: Independent entities ============ -->
 
-    <!-- DEVELOPER  (top-left) -->
-    <div class="entity color-green" id="e-developer" style="left: 30px; top: 30px;">
+    <!-- DEVELOPER (top-left) -->
+    <div class="entity color-green" id="e-developer" style="left: 40px; top: 40px;">
         <div class="entity-header">DEVELOPER</div>
         <div class="entity-body">
             <div class="attr pk"><span class="tag tag-pk">PK</span> developer_id</div>
@@ -146,8 +138,8 @@
         </div>
     </div>
 
-    <!-- LOCATION  (top-center) -->
-    <div class="entity color-blue" id="e-location" style="left: 520px; top: 30px;">
+    <!-- LOCATION (top-center) -->
+    <div class="entity color-blue" id="e-location" style="left: 620px; top: 40px;">
         <div class="entity-header">LOCATION</div>
         <div class="entity-body">
             <div class="attr pk"><span class="tag tag-pk">PK</span> location_id</div>
@@ -158,8 +150,8 @@
         </div>
     </div>
 
-    <!-- USER  (top-right) -->
-    <div class="entity color-purple" id="e-user" style="left: 1050px; top: 30px;">
+    <!-- USER (top-right, moved inward) -->
+    <div class="entity color-purple" id="e-user" style="left: 1100px; top: 40px;">
         <div class="entity-header">USER</div>
         <div class="entity-body">
             <div class="attr pk"><span class="tag tag-pk">PK</span> user_id</div>
@@ -172,8 +164,8 @@
         </div>
     </div>
 
-    <!-- AMENITY  (far left, middle) -->
-    <div class="entity color-orange" id="e-amenity" style="left: 30px; top: 770px;">
+    <!-- AMENITY (bottom-left) -->
+    <div class="entity color-orange" id="e-amenity" style="left: 40px; top: 900px;">
         <div class="entity-header">AMENITY</div>
         <div class="entity-body">
             <div class="attr pk"><span class="tag tag-pk">PK</span> amenity_id</div>
@@ -183,8 +175,8 @@
 
     <!-- ============ ROW 2: Dependent entities ============ -->
 
-    <!-- DEVELOPMENT  (center-left) -->
-    <div class="entity color-teal" id="e-development" style="left: 260px; top: 280px;">
+    <!-- DEVELOPMENT (middle-left) -->
+    <div class="entity color-teal" id="e-development" style="left: 320px; top: 310px;">
         <div class="entity-header">DEVELOPMENT</div>
         <div class="entity-body">
             <div class="attr pk"><span class="tag tag-pk">PK</span> development_id</div>
@@ -195,8 +187,8 @@
         </div>
     </div>
 
-    <!-- USER_FOCUS_AREA  (center-right) -->
-    <div class="entity color-purple" id="e-user-focus" style="left: 830px; top: 190px;">
+    <!-- USER_FOCUS_AREA (middle-right, junction) -->
+    <div class="entity color-purple" id="e-user-focus" style="left: 870px; top: 210px;">
         <div class="entity-header">USER_FOCUS_AREA</div>
         <div class="entity-body">
             <div class="attr pk fk"><span class="tag tag-pk">PK</span><span class="tag tag-fk">FK</span> user_id</div>
@@ -204,8 +196,8 @@
         </div>
     </div>
 
-    <!-- REVIEW  (right) -->
-    <div class="entity color-slate" id="e-review" style="left: 830px; top: 370px;">
+    <!-- REVIEW (right side) -->
+    <div class="entity color-slate" id="e-review" style="left: 870px; top: 410px;">
         <div class="entity-header">REVIEW</div>
         <div class="entity-body">
             <div class="attr pk"><span class="tag tag-pk">PK</span> review_id</div>
@@ -219,8 +211,8 @@
 
     <!-- ============ ROW 3: Property & junctions ============ -->
 
-    <!-- PROPERTY  (center) -->
-    <div class="entity color-rose" id="e-property" style="left: 400px; top: 550px;">
+    <!-- PROPERTY (center-bottom) -->
+    <div class="entity color-rose" id="e-property" style="left: 500px; top: 600px;">
         <div class="entity-header">PROPERTY</div>
         <div class="entity-body">
             <div class="attr pk"><span class="tag tag-pk">PK</span> property_id</div>
@@ -243,8 +235,8 @@
         </div>
     </div>
 
-    <!-- PROPERTY_AMENITY  (bottom-left) -->
-    <div class="entity color-orange" id="e-property-amenity" style="left: 60px; top: 610px;">
+    <!-- PROPERTY_AMENITY (bottom-left, junction) -->
+    <div class="entity color-orange" id="e-property-amenity" style="left: 120px; top: 710px;">
         <div class="entity-header">PROPERTY_AMENITY</div>
         <div class="entity-body">
             <div class="attr pk fk"><span class="tag tag-pk">PK</span><span class="tag tag-fk">FK</span> property_id</div>
@@ -255,10 +247,10 @@
     <!-- LEGEND -->
     <div class="legend">
         <h4>Legend</h4>
-        <div class="legend-item"><span class="tag tag-pk" style="font-size:9px">PK</span> Primary Key</div>
-        <div class="legend-item"><span class="tag tag-fk" style="font-size:9px">FK</span> Foreign Key</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:#3b82f6"></div> 1 : N Relationship</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:#f59e0b; background:repeating-linear-gradient(90deg,#8b5cf6 0,#8b5cf6 4px,transparent 4px,transparent 7px)"></div> M : N (Junction Table)</div>
+        <div class="legend-item"><span class="tag tag-pk" style="font-size:10px">PK</span> Primary Key (underlined)</div>
+        <div class="legend-item"><span class="tag tag-fk" style="font-size:10px">FK</span> Foreign Key (italic)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#334155"></div> 1 : N &nbsp;(solid line)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:repeating-linear-gradient(90deg,#7c3aed 0,#7c3aed 5px,transparent 5px,transparent 8px)"></div> M : N &nbsp;(dashed, via junction)</div>
     </div>
 </div>
 
@@ -271,124 +263,178 @@ function box(id) {
     const r = el.getBoundingClientRect();
     const c = canvas.getBoundingClientRect();
     return {
-        l: r.left - c.left,
-        t: r.top - c.top,
-        r: r.right - c.left,
-        b: r.bottom - c.top,
-        cx: (r.left + r.right) / 2 - c.left,
-        cy: (r.top + r.bottom) / 2 - c.top,
-        w: r.width,
-        h: r.height
+        l: r.left - c.left, t: r.top - c.top,
+        r: r.right - c.left, b: r.bottom - c.top,
+        cx: (r.left + r.right)/2 - c.left,
+        cy: (r.top + r.bottom)/2 - c.top,
     };
 }
 
-function pt(b, side, offset) {
-    offset = offset || 0;
-    switch(side) {
-        case 'top':    return { x: b.cx + offset, y: b.t };
-        case 'bottom': return { x: b.cx + offset, y: b.b };
-        case 'left':   return { x: b.l, y: b.cy + offset };
-        case 'right':  return { x: b.r, y: b.cy + offset };
-    }
+function anchor(b, side, off) {
+    off = off || 0;
+    if (side === 'top')    return {x: b.cx + off, y: b.t};
+    if (side === 'bottom') return {x: b.cx + off, y: b.b};
+    if (side === 'left')   return {x: b.l, y: b.cy + off};
+    if (side === 'right')  return {x: b.r, y: b.cy + off};
 }
 
-function svgEl(tag, attrs) {
-    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-    for (const [k,v] of Object.entries(attrs)) el.setAttribute(k, v);
-    svg.appendChild(el);
-    return el;
+function el(tag, attrs) {
+    const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [k,v] of Object.entries(attrs)) e.setAttribute(k, v);
+    svg.appendChild(e);
+    return e;
 }
 
-function drawLine(p1, p2, color, dashed, waypoints) {
-    let d = `M ${p1.x} ${p1.y}`;
-    if (waypoints) {
-        for (const wp of waypoints) d += ` L ${wp.x} ${wp.y}`;
+// Draw a path (straight or with waypoints)
+function drawPath(points, color, dashed) {
+    let d = 'M ' + points[0].x + ' ' + points[0].y;
+    for (let i = 1; i < points.length; i++) {
+        d += ' L ' + points[i].x + ' ' + points[i].y;
     }
-    d += ` L ${p2.x} ${p2.y}`;
-    svgEl('path', {
-        d: d,
-        stroke: color,
-        'stroke-width': '2',
-        fill: 'none',
-        'stroke-dasharray': dashed ? '6,4' : 'none'
+    el('path', {
+        d: d, stroke: color, 'stroke-width': '2.5', fill: 'none',
+        'stroke-dasharray': dashed ? '8,5' : 'none',
+        'stroke-linecap': 'round', 'stroke-linejoin': 'round'
     });
 }
 
-function drawCard(x, y, label, color) {
-    // cardinality label
-    svgEl('rect', {
-        x: x - 10, y: y - 8,
-        width: 20, height: 16,
-        rx: 3, fill: 'white',
-        stroke: '#cbd5e1', 'stroke-width': '1'
+// Draw a cardinality badge near a point, offset in a direction
+function badge(x, y, label, bgColor) {
+    el('rect', {
+        x: x - 12, y: y - 10, width: 24, height: 20,
+        rx: 5, fill: 'white', stroke: bgColor || '#475569', 'stroke-width': '1.5'
     });
-    svgEl('text', {
-        x: x, y: y + 4,
-        'text-anchor': 'middle',
-        'font-size': '11',
-        'font-weight': '700',
-        'font-family': 'Inter, sans-serif',
-        fill: color || '#1e40af'
+    el('text', {
+        x: x, y: y + 5, 'text-anchor': 'middle',
+        'font-size': '13', 'font-weight': '800',
+        'font-family': 'Inter, sans-serif', fill: bgColor || '#1e40af'
     }).textContent = label;
 }
 
-function drawRel(id1, side1, id2, side2, card1, card2, color, dashed, off1, off2, waypoints) {
-    const b1 = box(id1), b2 = box(id2);
-    const p1 = pt(b1, side1, off1);
-    const p2 = pt(b2, side2, off2);
-
-    drawLine(p1, p2, color, dashed, waypoints);
-
-    // Cardinality labels
-    const dx = (waypoints && waypoints.length > 0) ? waypoints[0].x - p1.x : p2.x - p1.x;
-    const dy = (waypoints && waypoints.length > 0) ? waypoints[0].y - p1.y : p2.y - p1.y;
-    const len1 = Math.sqrt(dx*dx + dy*dy) || 1;
-
-    const lastWp = (waypoints && waypoints.length > 0) ? waypoints[waypoints.length - 1] : p1;
-    const dx2 = p2.x - lastWp.x;
-    const dy2 = p2.y - lastWp.y;
-    const len2 = Math.sqrt(dx2*dx2 + dy2*dy2) || 1;
-
-    // Near start
-    const nx1 = -dy/len1, ny1 = dx/len1;
-    drawCard(p1.x + dx/len1*22 + nx1*14, p1.y + dy/len1*22 + ny1*14, card1, color);
-
-    // Near end
-    const nx2 = -dy2/len2, ny2 = dx2/len2;
-    drawCard(p2.x - dx2/len2*22 + nx2*14, p2.y - dy2/len2*22 + ny2*14, card2, color);
+// Draw a relationship label on the middle of a line
+function relLabel(x, y, text) {
+    const padding = 4;
+    const charWidth = 6.5;
+    const w = text.length * charWidth + padding * 2;
+    el('rect', {
+        x: x - w/2, y: y - 9, width: w, height: 18,
+        rx: 4, fill: '#f1f5f9', stroke: '#cbd5e1', 'stroke-width': '1'
+    });
+    el('text', {
+        x: x, y: y + 4, 'text-anchor': 'middle',
+        'font-size': '10', 'font-weight': '600',
+        'font-family': 'Inter, sans-serif', fill: '#475569'
+    }).textContent = text;
 }
 
-// ============ Draw relationships ============
+// Utility: get a point along a direction from a start point
+function along(p, dir, dist) {
+    if (dir === 'down')  return {x: p.x, y: p.y + dist};
+    if (dir === 'up')    return {x: p.x, y: p.y - dist};
+    if (dir === 'right') return {x: p.x + dist, y: p.y};
+    if (dir === 'left')  return {x: p.x - dist, y: p.y};
+}
 
-// Developer (1) --> Development (N)
-drawRel('e-developer', 'bottom', 'e-development', 'top', '1', 'N', '#059669', false, 0, -20);
+function midpoint(a, b) { return {x: (a.x+b.x)/2, y: (a.y+b.y)/2}; }
 
-// Location (1) --> Development (N)
-drawRel('e-location', 'bottom', 'e-development', 'top', '1', 'N', '#2563eb', false, -20, 20);
+// ================================================================
+// DRAW ALL RELATIONSHIPS
+// ================================================================
 
-// Development (1) --> Property (N)
-drawRel('e-development', 'bottom', 'e-property', 'top', '1', 'N', '#0d9488', false, 0, -30);
+// --- 1. Developer (1) --> Development (N) ---
+{
+    const p1 = anchor(box('e-developer'), 'bottom');
+    const p2 = anchor(box('e-development'), 'top', -25);
+    drawPath([p1, {x: p1.x, y: (p1.y+p2.y)/2}, {x: p2.x, y: (p1.y+p2.y)/2}, p2], '#059669', false);
+    badge(p1.x, p1.y + 18, '1', '#059669');
+    badge(p2.x, p2.y - 18, 'N', '#059669');
+    relLabel((p1.x+p2.x)/2, (p1.y+p2.y)/2, 'develops');
+}
 
-// Location (1) --> Property (N)  — route through a waypoint to avoid overlapping
-const locBox = box('e-location');
-const propBox = box('e-property');
-drawRel('e-location', 'bottom', 'e-property', 'top', '1', 'N', '#2563eb', false, 20, 30,
-    [{x: locBox.cx + 20, y: 240}, {x: propBox.cx + 30 + (propBox.r - propBox.l)/2 + 30, y: 240}, {x: propBox.cx + 30 + (propBox.r - propBox.l)/2 + 30, y: 530}]
-);
+// --- 2. Location (1) --> Development (N) ---
+{
+    const p1 = anchor(box('e-location'), 'bottom', -30);
+    const p2 = anchor(box('e-development'), 'top', 25);
+    drawPath([p1, {x: p1.x, y: (p1.y+p2.y)/2}, {x: p2.x, y: (p1.y+p2.y)/2}, p2], '#2563eb', false);
+    badge(p1.x, p1.y + 18, '1', '#2563eb');
+    badge(p2.x, p2.y - 18, 'N', '#2563eb');
+    relLabel((p1.x+p2.x)/2, (p1.y+p2.y)/2 - 16, 'hosts');
+}
 
-// Property (N) <-- M:N --> Amenity (N)  via Property_Amenity
-drawRel('e-property', 'left', 'e-property-amenity', 'right', 'N', '', '#e11d48', true, 0, 0);
-drawRel('e-amenity', 'top', 'e-property-amenity', 'bottom', 'N', '', '#d97706', true, 0, 0);
+// --- 3. Development (1) --> Property (N) ---
+{
+    const p1 = anchor(box('e-development'), 'bottom');
+    const p2 = anchor(box('e-property'), 'top', -30);
+    drawPath([p1, {x: p1.x, y: (p1.y+p2.y)/2}, {x: p2.x, y: (p1.y+p2.y)/2}, p2], '#0d9488', false);
+    badge(p1.x, p1.y + 18, '1', '#0d9488');
+    badge(p2.x, p2.y - 18, 'N', '#0d9488');
+    relLabel((p1.x+p2.x)/2, (p1.y+p2.y)/2, 'contains');
+}
 
-// User (1) --> Review (N)
-drawRel('e-user', 'bottom', 'e-review', 'right', '1', 'N', '#7c3aed', false, 0, -20);
+// --- 4. Location (1) --> Property (N) ---
+{
+    const locB = box('e-location');
+    const propB = box('e-property');
+    const p1 = anchor(locB, 'bottom', 30);
+    const p2 = anchor(propB, 'right', -80);
+    // Route: go down from Location, then right, then down to Property right side
+    const midY = 260;
+    const rightX = propB.r + 50;
+    drawPath([p1, {x: p1.x, y: midY}, {x: rightX, y: midY}, {x: rightX, y: p2.y}, p2], '#2563eb', false);
+    badge(p1.x, p1.y + 18, '1', '#2563eb');
+    badge(p2.x + 18, p2.y, 'N', '#2563eb');
+    relLabel(rightX, (midY + p2.y)/2, 'situated in');
+}
 
-// Development (1) --> Review (N)
-drawRel('e-development', 'right', 'e-review', 'left', '1', 'N', '#475569', false, 0, 10);
+// --- 5. Development (1) --> Review (N) ---
+{
+    const p1 = anchor(box('e-development'), 'right', 10);
+    const p2 = anchor(box('e-review'), 'left', 10);
+    drawPath([p1, {x: (p1.x+p2.x)/2, y: p1.y}, {x: (p1.x+p2.x)/2, y: p2.y}, p2], '#475569', false);
+    badge(p1.x + 18, p1.y, '1', '#475569');
+    badge(p2.x - 18, p2.y, 'N', '#475569');
+    relLabel((p1.x+p2.x)/2, (p1.y+p2.y)/2, 'receives');
+}
 
-// User (M) <--> Location (N) via User_Focus_Area
-drawRel('e-user', 'left', 'e-user-focus', 'right', 'N', '', '#7c3aed', true, -30, 0);
-drawRel('e-location', 'right', 'e-user-focus', 'left', 'N', '', '#2563eb', true, -10, 0);
+// --- 6. User (1) --> Review (N) ---
+{
+    const p1 = anchor(box('e-user'), 'bottom');
+    const p2 = anchor(box('e-review'), 'top');
+    drawPath([p1, p2], '#7c3aed', false);
+    badge(p1.x, p1.y + 18, '1', '#7c3aed');
+    badge(p2.x, p2.y - 18, 'N', '#7c3aed');
+    relLabel(p1.x + 40, (p1.y+p2.y)/2, 'writes');
+}
+
+// --- 7. Property (N) <--> Amenity (N) via Property_Amenity ---
+{
+    const p1 = anchor(box('e-property'), 'left', 20);
+    const pa = anchor(box('e-property-amenity'), 'right');
+    drawPath([p1, pa], '#e11d48', true);
+    badge(p1.x - 18, p1.y, 'N', '#e11d48');
+
+    const p3 = anchor(box('e-amenity'), 'top');
+    const pa2 = anchor(box('e-property-amenity'), 'bottom');
+    drawPath([pa2, p3], '#d97706', true);
+    badge(p3.x, p3.y - 18, 'N', '#d97706');
+
+    relLabel((p1.x+pa.x)/2, (p1.y+pa.y)/2 - 14, 'has amenity');
+}
+
+// --- 8. User (N) <--> Location (N) via User_Focus_Area ---
+{
+    const p1 = anchor(box('e-user'), 'left', -10);
+    const uf = anchor(box('e-user-focus'), 'right');
+    drawPath([p1, uf], '#7c3aed', true);
+    badge(p1.x - 18, p1.y, 'N', '#7c3aed');
+
+    const p2 = anchor(box('e-location'), 'right', -10);
+    const uf2 = anchor(box('e-user-focus'), 'left');
+    drawPath([uf2, p2], '#2563eb', true);
+    badge(p2.x + 18, p2.y, 'N', '#2563eb');
+
+    relLabel((p1.x+uf.x)/2, (p1.y+uf.y)/2 - 14, 'focuses on');
+}
 
 </script>
 
