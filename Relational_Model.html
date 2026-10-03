@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Relational Model — Resale Real Estate Database</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 12mm 12mm 12mm 12mm;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            color: #1e293b;
+            background-color: #ffffff;
+            line-height: 1.45;
+            font-size: 12.5px;
+            padding: 15px;
+        }
+
+        .header-container {
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header-title h1 {
+            font-size: 22px;
+            color: #0f172a;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .header-title h2 {
+            font-size: 13px;
+            color: #2563eb;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .header-meta {
+            text-align: right;
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .badge-course {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 4px;
+            font-size: 11px;
+        }
+
+        .notation-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin-bottom: 18px;
+            font-size: 11.5px;
+        }
+
+        .notation-box strong {
+            color: #1e293b;
+        }
+
+        .section-header {
+            font-size: 14px;
+            color: #0f172a;
+            border-bottom: 1.5px solid #cbd5e1;
+            padding-bottom: 4px;
+            margin-top: 18px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .schema-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+
+        .schema-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .schema-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .schema-type {
+            font-size: 9.5px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .type-base {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .type-dependent {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .type-junction {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+        }
+
+        .schema-signature {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            padding: 7px 10px;
+            border-radius: 5px;
+            font-size: 11.5px;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+
+        .pk-attr {
+            text-decoration: underline;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+
+        .fk-attr {
+            font-style: italic;
+            color: #f43f5e;
+        }
+
+        .schema-details {
+            font-size: 11.5px;
+            color: #334155;
+        }
+
+        .schema-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .schema-details li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 3px;
+        }
+
+        .schema-details li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .tag-pk {
+            color: #1d4ed8;
+            font-weight: 700;
+        }
+
+        .tag-fk {
+            color: #be123c;
+            font-weight: 700;
+        }
+
+        .tag-check {
+            color: #d97706;
+            font-weight: 700;
+        }
+
+        .tag-unique {
+            color: #047857;
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            margin-bottom: 14px;
+            font-size: 11.5px;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 6px 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .dependency-tree {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 11px;
+            line-height: 1.55;
+            margin-bottom: 16px;
+            page-break-inside: avoid;
+        }
+
+        .dep-title {
+            color: #38bdf8;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10px;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="header-title">
+            <span class="badge-course">CSCE 2501 — Database Systems</span>
+            <h1>Relational Model (Schema Mapping)</h1>
+            <h2>Resale Real Estate Database — Milestone I</h2>
+        </div>
+        <div class="header-meta">
+            <p><strong>Document Status:</strong> Validated Relational Model</p>
+            <p><strong>Normal Form:</strong> 3NF / BCNF Verified</p>
+        </div>
+    </div>
+
+    <div class="notation-box">
+        <strong>Notation &amp; Conventions:</strong><br>
+        • <span class="pk-attr" style="color: #1d4ed8;"><u>Underlined</u></span> attributes denote <strong>Primary Keys (PK)</strong>.<br>
+        • <span class="fk-attr" style="color: #be123c;"><em>Italicized</em></span> attributes denote <strong>Foreign Keys (FK)</strong>.<br>
+        • All relation schemas are fully normalized to at least <strong>3NF / BCNF</strong>.
+    </div>
+
+    <div class="section-header">1. Relational Schemas</div>
+
+    <!-- 1. Location -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">1. Location</span>
+            <span class="schema-type type-base">Independent Base Entity</span>
+        </div>
+        <div class="schema-signature">
+            Location(<span class="pk-attr">location_id</span>, city, district, area_name, compound_name)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">PK:</span> <code>location_id</code></li>
+                <li><span class="tag-unique">FK:</span> None (Independent lookup entity)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 2. Developer -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">2. Developer</span>
+            <span class="schema-type type-base">Independent Base Entity</span>
+        </div>
+        <div class="schema-signature">
+            Developer(<span class="pk-attr">developer_id</span>, developer_name, corporate_details, total_projects, total_properties_listed)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">PK:</span> <code>developer_id</code></li>
+                <li><span class="tag-unique">UNIQUE:</span> <code>developer_name</code></li>
+                <li><span class="tag-unique">FK:</span> None (Independent entity)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 3. Development -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">3. Development</span>
+            <span class="schema-type type-dependent">Dependent Entity</span>
+        </div>
+        <div class="schema-signature">
+            Development(<span class="pk-attr">development_id</span>, project_name, description, <span class="fk-attr">developer_id</span>, <span class="fk-attr">location_id</span>)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">PK:</span> <code>development_id</code></li>
+                <li><span class="tag-fk">FK 1:</span> <code>developer_id</code> → <code>Developer(developer_id)</code> ON DELETE RESTRICT ON UPDATE CASCADE</li>
+                <li><span class="tag-fk">FK 2:</span> <code>location_id</code> → <code>Location(location_id)</code> ON DELETE RESTRICT ON UPDATE CASCADE</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 4. Property -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">4. Property</span>
+            <span class="schema-type type-dependent">Dependent Entity</span>
+        </div>
+        <div class="schema-signature">
+            Property(<span class="pk-attr">property_id</span>, title, description, source_url, total_area_sqm, num_bedrooms, num_bathrooms, property_type, asking_price, price_per_sqm, payment_method, down_payment, contract_year, discount_over_market, gain_over_market, <span class="fk-attr">development_id</span>, <span class="fk-attr">location_id</span>)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">PK:</span> <code>property_id</code></li>
+                <li><span class="tag-fk">FK 1:</span> <code>development_id</code> → <code>Development(development_id)</code> ON DELETE CASCADE ON UPDATE CASCADE</li>
+                <li><span class="tag-fk">FK 2:</span> <code>location_id</code> → <code>Location(location_id)</code> ON DELETE RESTRICT ON UPDATE CASCADE</li>
+                <li><span class="tag-check">CHECK:</span> <code>property_type</code> IN ('apartment', 'villa', 'townhouse', 'duplex', 'chalet', 'penthouse', 'studio', 'other')</li>
+                <li><span class="tag-check">CHECK:</span> <code>payment_method</code> IN ('cash', 'installment')</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 5. Amenity -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">5. Amenity</span>
+            <span class="schema-type type-base">Independent Base Entity</span>
+        </div>
+        <div class="schema-signature">
+            Amenity(<span class="pk-attr">amenity_id</span>, amenity_name)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">PK:</span> <code>amenity_id</code></li>
+                <li><span class="tag-unique">UNIQUE:</span> <code>amenity_name</code></li>
+                <li><span class="tag-unique">FK:</span> None (Lookup entity)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 6. Property_Amenity -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">6. Property_Amenity</span>
+            <span class="schema-type type-junction">Junction Table (M:N)</span>
+        </div>
+        <div class="schema-signature">
+            Property_Amenity(<span class="pk-attr"><span class="fk-attr">property_id</span></span>, <span class="pk-attr"><span class="fk-attr">amenity_id</span></span>)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">COMPOSITE PK:</span> (<code>property_id</code>, <code>amenity_id</code>)</li>
+                <li><span class="tag-fk">FK 1:</span> <code>property_id</code> → <code>Property(property_id)</code> ON DELETE CASCADE ON UPDATE CASCADE</li>
+                <li><span class="tag-fk">FK 2:</span> <code>amenity_id</code> → <code>Amenity(amenity_id)</code> ON DELETE CASCADE ON UPDATE CASCADE</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 7. User -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">7. User</span>
+            <span class="schema-type type-base">Independent Base Entity</span>
+        </div>
+        <div class="schema-signature">
+            User(<span class="pk-attr">user_id</span>, username, email, password_hash, gender, age, birthdate)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">PK:</span> <code>user_id</code></li>
+                <li><span class="tag-unique">UNIQUE:</span> <code>username</code>, <code>email</code></li>
+                <li><span class="tag-check">CHECK:</span> <code>gender</code> IN ('Male', 'Female')</li>
+                <li><span class="tag-check">CHECK:</span> <code>age</code> &gt;= 18</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 8. User_Focus_Area -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">8. User_Focus_Area</span>
+            <span class="schema-type type-junction">Junction Table (M:N)</span>
+        </div>
+        <div class="schema-signature">
+            User_Focus_Area(<span class="pk-attr"><span class="fk-attr">user_id</span></span>, <span class="pk-attr"><span class="fk-attr">location_id</span></span>)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">COMPOSITE PK:</span> (<code>user_id</code>, <code>location_id</code>)</li>
+                <li><span class="tag-fk">FK 1:</span> <code>user_id</code> → <code>User(user_id)</code> ON DELETE CASCADE ON UPDATE CASCADE</li>
+                <li><span class="tag-fk">FK 2:</span> <code>location_id</code> → <code>Location(location_id)</code> ON DELETE CASCADE ON UPDATE CASCADE</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 9. Review -->
+    <div class="schema-card">
+        <div class="schema-card-header">
+            <span class="schema-name">9. Review</span>
+            <span class="schema-type type-dependent">Dependent Entity</span>
+        </div>
+        <div class="schema-signature">
+            Review(<span class="pk-attr">review_id</span>, <span class="fk-attr">user_id</span>, <span class="fk-attr">development_id</span>, rating, review_comment, review_date)
+        </div>
+        <div class="schema-details">
+            <ul>
+                <li><span class="tag-pk">PK:</span> <code>review_id</code></li>
+                <li><span class="tag-fk">FK 1:</span> <code>user_id</code> → <code>User(user_id)</code> ON DELETE CASCADE ON UPDATE CASCADE</li>
+                <li><span class="tag-fk">FK 2:</span> <code>development_id</code> → <code>Development(development_id)</code> ON DELETE CASCADE ON UPDATE CASCADE</li>
+                <li><span class="tag-check">CHECK:</span> <code>rating</code> BETWEEN 1 AND 10</li>
+                <li><span class="tag-unique">UNIQUE:</span> (<code>user_id</code>, <code>development_id</code>) — ensures 1 review per user per project</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-header">2. Normalization Verification</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Normal Form</th>
+                <th>Status</th>
+                <th>Justification</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1NF</strong></td>
+                <td><span style="color: #16a34a; font-weight: bold;">✔ Satisfied</span></td>
+                <td>All attributes contain atomic values. Multi-valued attributes (amenities, focus areas) are resolved via junction tables.</td>
+            </tr>
+            <tr>
+                <td><strong>2NF</strong></td>
+                <td><span style="color: #16a34a; font-weight: bold;">✔ Satisfied</span></td>
+                <td>No partial dependencies exist. All non-key attributes fully depend on the complete Primary Key in every relation.</td>
+            </tr>
+            <tr>
+                <td><strong>3NF</strong></td>
+                <td><span style="color: #16a34a; font-weight: bold;">✔ Satisfied</span></td>
+                <td>No transitive dependencies exist. Every non-key attribute depends directly on the primary key.</td>
+            </tr>
+            <tr>
+                <td><strong>BCNF</strong></td>
+                <td><span style="color: #16a34a; font-weight: bold;">✔ Satisfied</span></td>
+                <td>Every functional dependency determinant is a candidate key in all relations.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-header">3. Table Creation Order &amp; Dependency Tree</div>
+
+    <div class="dependency-tree">
+        <div class="dep-title">Independent Base Tables (Create First):</div>
+        &nbsp;&nbsp;1. Location<br>
+        &nbsp;&nbsp;2. Developer<br>
+        &nbsp;&nbsp;3. User<br>
+        &nbsp;&nbsp;4. Amenity<br><br>
+        <div class="dep-title">Dependent &amp; Junction Tables (Create After Parents):</div>
+        &nbsp;&nbsp;5. Development &nbsp;&nbsp;&nbsp;──► [depends on: Developer, Location]<br>
+        &nbsp;&nbsp;6. Property &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──► [depends on: Development, Location]<br>
+        &nbsp;&nbsp;7. Property_Amenity ──► [depends on: Property, Amenity]<br>
+        &nbsp;&nbsp;8. User_Focus_Area &nbsp;──► [depends on: User, Location]<br>
+        &nbsp;&nbsp;9. Review &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──► [depends on: User, Development]
+    </div>
+
+    <footer>
+        CSCE 2501 Database Systems Project — Resale Real Estate Database — Relational Model Document
+    </footer>
+
+</body>
+</html>
