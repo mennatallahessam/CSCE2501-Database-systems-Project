@@ -1,0 +1,14 @@
+User-Agent: *
+Allow: /
+Allow: /buy/opportunity/
+Allow: /api/og/
+Disallow: /ops
+Disallow: /app
+Disallow: /buy
+Disallow: /api
+Disallow: /u
+Disallow: /stop
+Disallow: /*_rsc=
+Disallow: /buy/opportunity/*_rsc=
+
+Sitemap: https://aqarexit.com/sitemap.xml

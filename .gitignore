@@ -1,2 +1,17 @@
-# Project prompt - do not push to GitHub
+# Environment & Secrets
+.env
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Crawler runtime state & raw cache
+raw/
+crawl_state.sqlite
+crawl.log
+
+# Prompts & local notes
 milestone_1_detailed_prompt.md
+milestone2_prompt.md
