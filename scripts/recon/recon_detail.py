@@ -16,7 +16,9 @@ HEADERS = {
 s = requests.Session()
 s.headers.update(HEADERS)
 
-urls = Path('./samples/sitemap_property_urls.txt').read_text('utf-8').strip().split('\n')
+repo_root = Path(__file__).resolve().parent.parent.parent
+urls_path = repo_root / "samples" / "property_urls.txt"
+urls = urls_path.read_text('utf-8').strip().split('\n')
 # Pick a diverse sample (positions 0, 100, 500, 1000, 2000)
 sample_urls = [urls[i] for i in [0, 100, 500, 1000, 2000] if i < len(urls)]
 

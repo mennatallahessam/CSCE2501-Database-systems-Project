@@ -17,10 +17,15 @@ Checks:
 
 import csv
 import logging
+import os
 import random
 import sys
 from pathlib import Path
 from datetime import date
+
+os.environ.setdefault("PYTHONIOENCODING", "utf-8")
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 import mysql.connector
 
@@ -31,7 +36,7 @@ from config import (
 )
 
 log = logging.getLogger(__name__)
-OUTPUT_PATH = Path("./validation_report.md")
+OUTPUT_PATH = Path(__file__).resolve().parent.parent / "docs" / "milestone-2" / "validation_report.md"
 
 
 def _conn():
@@ -68,6 +73,7 @@ class Report:
             self.lines.append("| " + " | ".join(str(c) for c in row) + " |")
 
     def save(self, path: Path):
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("\n".join(self.lines), encoding="utf-8")
         print(f"\nValidation report saved → {path}")
 

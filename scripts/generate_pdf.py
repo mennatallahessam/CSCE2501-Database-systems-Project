@@ -7,7 +7,12 @@ from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable
 )
 
-def build_pdf(filename="Relational_Model.pdf"):
+DEFAULT_OUT = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "docs", "milestone-1", "Relational_Model.pdf"
+)
+
+def build_pdf(filename=DEFAULT_OUT):
     doc = SimpleDocTemplate(
         filename,
         pagesize=A4,

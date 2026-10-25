@@ -6,7 +6,12 @@
 > **Notation:**  
 > - **Underlined** attributes denote **Primary Keys (PK)**.  
 > - *Italicized* attributes denote **Foreign Keys (FK)**.  
-> - All schemas are normalized to at least **3NF / BCNF**.
+> - All schemas are normalized to at least **3NF / BCNF**.  
+>  
+> **Formatted Deliverables:**  
+> - 📄 **PDF Report:** [Relational_Model.pdf](Relational_Model.pdf)  
+> - 🌐 **Interactive Web View:** [Relational_Model.html](Relational_Model.html)  
+> - 🗄️ **SQL Schema:** [`ResaleRealEstateDB.sql`](../../ResaleRealEstateDB.sql)
 
 ---
 

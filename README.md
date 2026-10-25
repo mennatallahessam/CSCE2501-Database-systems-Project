@@ -5,19 +5,97 @@ A production-grade relational database and end-to-end data acquisition pipeline 
 
 ---
 
-## 📦 Milestone II: Web Crawler, ETL & Database Population
+## 📑 Project Deliverables Directory
 
-### Deliverables Checklist
+### Milestone I: Conceptual & Logical Database Design
+| # | Deliverable | Location | Description |
+|---|---|---|---|
+| 1 | **Entity-Relationship Diagram (ERD)** | [`docs/milestone-1/ERD.md`](docs/milestone-1/ERD.md) | Formal ER specifications, entities, relationships, attributes, and Mermaid diagram |
+| 2 | **Interactive ERD Visualization** | [`docs/milestone-1/ERD_Diagram.html`](docs/milestone-1/ERD_Diagram.html) | Interactive web-based SVG diagram with visual entity mapping |
+| 3 | **ERD High-Resolution Screenshots** | [`docs/milestone-1/screenshots/`](docs/milestone-1/screenshots/) | Rendered PNG diagrams ([`erd_full.png`](docs/milestone-1/screenshots/erd_full.png), [`erd_top.png`](docs/milestone-1/screenshots/erd_top.png), [`erd_bottom.png`](docs/milestone-1/screenshots/erd_bottom.png)) |
+| 4 | **Relational Model (Schema Mapping)** | [`docs/milestone-1/Relational_Model.md`](docs/milestone-1/Relational_Model.md) | 3NF / BCNF normalized schemas, functional dependencies, primary & foreign keys |
+| 5 | **Relational Model (PDF Report)** | [`docs/milestone-1/Relational_Model.pdf`](docs/milestone-1/Relational_Model.pdf) | Submission-ready formatted PDF report |
+| 6 | **Relational Model (Web View)** | [`docs/milestone-1/Relational_Model.html`](docs/milestone-1/Relational_Model.html) | Styled web presentation of the relational schemas |
+| 7 | **MySQL Schema Transcript** | [`ResaleRealEstateDB.sql`](ResaleRealEstateDB.sql) | Complete DDL script creating all 9 tables, indexes, checks, and foreign keys |
 
-| # | Deliverable | Location / Command |
-|---|---|---|
-| 1 | **Reconnaissance Report** | [`RECON.md`](RECON.md) |
-| 2 | **Web Crawler & Pipeline** | [`run_pipeline.py`](run_pipeline.py), [`crawler/`](crawler/), [`etl/`](etl/) |
-| 3 | **Unit Test Suite** | [`tests/test_parse.py`](tests/test_parse.py) (112 test cases) |
-| 4 | **MySQL Database Dump** | [`output/resale_db_dump.sql`](output/resale_db_dump.sql) |
-| 5 | **UTF-8 with BOM CSVs** | [`output/csv/`](output/csv/) (all 9 tables) |
-| 6 | **Validation Report** | [`validation_report.md`](validation_report.md) |
-| 7 | **Milestone III Smoke Tests**| [`validation/milestone3_smoke_tests.sql`](validation/milestone3_smoke_tests.sql) |
+### Milestone II: Web Crawler, ETL Pipeline & Database Population
+| # | Deliverable | Location | Description |
+|---|---|---|---|
+| 1 | **Reconnaissance Report** | [`docs/milestone-2/RECON.md`](docs/milestone-2/RECON.md) | Platform architecture, robots.txt, rate limits, selectors, and schema mappings |
+| 2 | **Master Pipeline Runner** | [`run_pipeline.py`](run_pipeline.py) | CLI runner managing discover, fetch, parse, clean, load, seed, export, validate |
+| 3 | **Web Crawler Engine** | [`crawler/`](crawler/) | Resumable, rate-limited crawler (`discover.py`, `fetch.py`, `parse.py`) |
+| 4 | **ETL & Data Transformation** | [`etl/`](etl/) | Cleaning, normalisation, MySQL idempotent loader, synthetic user seeding, CSV export |
+| 5 | **Unit Test Suite** | [`tests/test_parse.py`](tests/test_parse.py) | 112 pytest cases validating Arabic extraction, regexes, and clean rules |
+| 6 | **MySQL Database Dump** | [`output/resale_db_dump.sql`](output/resale_db_dump.sql) | Full database dump with 8,602 properties, 64,486 reviews, and utf8mb4 collation |
+| 7 | **UTF-8 with BOM CSVs** | [`output/csv/`](output/csv/) | Clean CSV exports for all 9 tables matching database records 1-to-1 |
+| 8 | **Validation Report** | [`docs/milestone-2/validation_report.md`](docs/milestone-2/validation_report.md) | Automated validation verifying 100% crawl completeness and zero orphan records |
+| 9 | **Milestone III Smoke Tests** | [`validation/milestone3_smoke_tests.sql`](validation/milestone3_smoke_tests.sql) | 8 verified analytical SQL queries required for the application tier |
+
+---
+
+## 📂 Repository Structure
+
+```text
+csce2501-project-database/
+├── README.md                           # Master project guide & deliverables index
+├── ResaleRealEstateDB.sql              # Milestone I MySQL DDL schema script
+├── config.py                           # Central configuration (crawler, db, paths)
+├── requirements.txt                    # Python runtime dependencies
+├── run_pipeline.py                     # Master CLI pipeline runner (stages 1-8)
+├── .env.example                        # Environment variables template
+├── .gitignore                          # Git ignore rules
+│
+├── docs/                               # Project documentation & deliverables
+│   ├── milestone-1/                    # Milestone 1: ERD & Relational Model
+│   │   ├── ERD.md                      # Conceptual design & Mermaid diagram
+│   │   ├── ERD_Diagram.html            # Interactive SVG ERD viewer
+│   │   ├── Relational_Model.md         # 3NF relational schemas & mapping proofs
+│   │   ├── Relational_Model.html       # Styled HTML view of relational model
+│   │   ├── Relational_Model.pdf        # Formatted PDF document
+│   │   └── screenshots/                # Rendered PNG diagrams (full, top, bottom)
+│   ├── milestone-2/                    # Milestone 2: Reconnaissance & Validation
+│   │   ├── RECON.md                    # Target site analysis & field mapping
+│   │   └── validation_report.md        # Pipeline data integrity & sanity report
+│   └── specifications/                 # Course assignment instructions & prompts
+│       ├── milestone_1_detailed_prompt.md
+│       └── milestone2_prompt.md
+│
+├── crawler/                            # Stage 1-3: Web scraping modules
+│   ├── discover.py                     # Sitemap parser (extracts property URLs)
+│   ├── fetch.py                        # Polite, rate-limited HTTP fetcher
+│   └── parse.py                        # BeautifulSoup & ld+json parser
+│
+├── etl/                                # Stage 4-7: Extraction, loading, and export
+│   ├── clean.py                        # Field validation, cleaning & derived metrics
+│   ├── load.py                         # Idempotent upsert loader for MySQL
+│   ├── seed_users.py                   # Realistic Faker-based user & review seeding
+│   └── export_csv.py                   # UTF-8 with BOM CSV exporter for all tables
+│
+├── output/                             # Exported deliverables
+│   ├── resale_db_dump.sql              # Complete mysqldump SQL dump file
+│   └── csv/                            # 9 exported CSV files matching all tables
+│
+├── samples/                            # Offline test fixtures & cached samples
+│   ├── detail_*.html                   # Diverse property detail sample HTML pages
+│   ├── property_urls.txt               # Enumerate listing URLs from sitemap
+│   └── robots.txt                      # AqarExit robots.txt snapshot
+│
+├── scripts/                            # Helper utilities & reconnaissance tools
+│   ├── generate_pdf.py                 # ReportLab script building Relational_Model.pdf
+│   └── recon/                          # Phase 0 reconnaissance & probe scripts
+│       ├── recon_probe.py              # Initial HTTP & headers probe
+│       ├── recon_detail.py             # Sample detail page inspector
+│       ├── inspect_html.py             # DOM & CSS class explorer
+│       ├── extract_fields.py           # Structured ld+json & dl/dt extractor
+│       └── print_ldjson.py             # Pretty-printer for JSON-LD schemas
+│
+├── tests/                              # Automated testing
+│   └── test_parse.py                   # 112 pytest unit tests for parsing & cleaning
+│
+└── validation/                         # Stage 8: Data integrity & smoke tests
+    ├── validate.py                     # Automated sanity & integrity validator
+    └── milestone3_smoke_tests.sql      # Analytical queries for Milestone III
+```
 
 ---
 
@@ -27,7 +105,7 @@ A production-grade relational database and end-to-end data acquisition pipeline 
 [ AqarExit Sitemap ]
         │
         ▼ (Stage 1: discover)
-[ samples/property_urls.txt (8,110 URLs) ]
+[ samples/property_urls.txt (8,589 URLs) ]
         │
         ▼ (Stage 2: fetch — polite, rate-limited, resumable SQLite state)
 [ raw/<slug>.html (Cached HTML responses) ]
@@ -49,7 +127,7 @@ A production-grade relational database and end-to-end data acquisition pipeline 
                       │
                       ▼
         (Stage 8: validate)
-  [ validation_report.md & milestone3_smoke_tests.sql ]
+  [ docs/milestone-2/validation_report.md & validation/milestone3_smoke_tests.sql ]
 ```
 
 ---
@@ -162,7 +240,7 @@ mysql -u root -p -e "SHOW TABLES FROM test_restore_db;"
 
 ## 🔍 Validation & Milestone III Support
 
-- Post-load validation report is generated at [`validation_report.md`](validation_report.md).
+- Post-load validation report is generated at [`docs/milestone-2/validation_report.md`](docs/milestone-2/validation_report.md).
 - All 8 analytical queries required for Milestone III application layer are verified in [`validation/milestone3_smoke_tests.sql`](validation/milestone3_smoke_tests.sql).
 
 ---

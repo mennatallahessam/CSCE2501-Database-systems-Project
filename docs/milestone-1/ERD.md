@@ -3,6 +3,15 @@
 
 ---
 
+> **Interactive Visualization:** Open [ERD_Diagram.html](ERD_Diagram.html) in any browser for an interactive SVG view.  
+> **Visual Screenshot:** See the high-resolution rendering below ([screenshots/erd_full.png](screenshots/erd_full.png)).
+
+![Resale Real Estate Database ERD](screenshots/erd_full.png)
+
+---
+
+### Mermaid ERD Specification
+
 ```mermaid
 erDiagram
 

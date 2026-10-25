@@ -12,7 +12,7 @@ Stages:
   5. load      - insert into MySQL (idempotent)
   6. seed      - generate synthetic users / reviews
   7. export    - dump all tables to CSV
-  8. validate  - generate validation_report.md
+  8. validate  - generate docs/milestone-2/validation_report.md
 
 Run the full pipeline:
     python run_pipeline.py

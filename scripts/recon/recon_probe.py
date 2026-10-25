@@ -26,7 +26,7 @@ HEADERS = {
 
 BASE_URL = "https://aqarexit.com"
 LISTING_URL = "https://aqarexit.com/en/opportunities?show=8000"
-SAMPLES_DIR = Path("./samples")
+SAMPLES_DIR = Path(__file__).resolve().parent.parent.parent / "samples"
 SAMPLES_DIR.mkdir(exist_ok=True)
 
 session = requests.Session()
